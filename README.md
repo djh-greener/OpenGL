@@ -2,7 +2,7 @@
 
 # 介绍
 
-个人学习learnOpenGL各自示例的自学项目
+个人学习learnOpenGL各示例的项目
 
 # 平台
 
@@ -13,9 +13,7 @@
 # 构建
 
 ```
-mkdir build
-cd build
-cmake ..
+cmake .
 ```
 
 运行bin/Debug下的OpenGL.exe
