@@ -46,7 +46,7 @@
 
 #include"imgui/imgui.h"
 #include"imgui/imgui_impl_glfw_gl3.h"
-
+#include"7Shaders/DisAppear/DisAppearTest.h"
 void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -135,8 +135,8 @@ int main() {
 
 	testMenu->RegisterTest<PBRLightingTest>({ "6PBR","PBRLighting" });
 	testMenu->RegisterTest<IBLTest>({ "6PBR","IBL" });
-	
-	
+
+    testMenu->RegisterTest<DisAppearTest>({ "7Shaders","DisAppear" });
 	while (!glfwWindowShouldClose(window))
 	{
 		if (auto it = dynamic_cast<Test*>(currentTest)) {

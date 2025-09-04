@@ -17,7 +17,7 @@ shared_ptr<Mesh> Model::GetMeshRecursive(shared_ptr<MeshNode> node)
 {
 	for (auto mesh : node->meshes)
 		return mesh;
-	for (auto childnode : node->children) 
+	for (auto childnode : node->children)
 		return GetMeshRecursive(childnode);
 }
 
@@ -61,7 +61,15 @@ shared_ptr<Mesh> Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		Vertex v;
 		v.Position = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
-		v.Normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
+        if (calcVertexRange) {
+            if (v.Position.y > maxVertex.y && v.Position.x > maxVertex.x && v.Position.z > maxVertex.z) {
+                maxVertex = v.Position;
+            }
+            if (v.Position.y < minVertex.y && v.Position.x < minVertex.x && v.Position.z < minVertex.z) {
+                minVertex = v.Position;
+            }
+        }
+        v.Normal = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
 		if (mesh->mTextureCoords[0]) {
 			v.TexCoords = glm::vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
 			v.Tangent = glm::vec3(mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z);
@@ -78,13 +86,13 @@ shared_ptr<Mesh> Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	}
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
 		aiFace& face = mesh->mFaces[i];
-		for (unsigned int j = 0; j < face.mNumIndices; j++) 
+		for (unsigned int j = 0; j < face.mNumIndices; j++)
 			indices.push_back(face.mIndices[j]);
 	}
 	if (mesh->mMaterialIndex>0)
 	{
 		auto* material = scene->mMaterials[mesh->mMaterialIndex];
-		vector<shared_ptr<Texture>> ambients = loadMaterialTextures(material, aiTextureType_AMBIENT, "ambient");	
+		vector<shared_ptr<Texture>> ambients = loadMaterialTextures(material, aiTextureType_AMBIENT, "ambient");
 		vector<shared_ptr<Texture>> diffuses = loadMaterialTextures(material, aiTextureType_DIFFUSE, "diffuse");
 		vector<shared_ptr<Texture>> speculars = loadMaterialTextures(material, aiTextureType_SPECULAR, "specular");
 		vector<shared_ptr<Texture>> normals = loadMaterialTextures(material, aiTextureType_HEIGHT, "normal");

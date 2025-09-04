@@ -6,6 +6,7 @@ using namespace std;
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include<glm/glm.hpp>
 
 class Shader;
 class Texture;
@@ -18,13 +19,19 @@ struct MeshNode {
 
 class Model
 {
+    using Float = std::numeric_limits<float>;
 public:
-    Model(string path) {
+    Model(string path, bool calcVertexRange_ = false):calcVertexRange(calcVertexRange_){
+        maxVertex = { Float::min(),Float::min(),Float::min() };
+        minVertex = { Float::max(),Float::max(), Float::max() };
         loadModel(path);
     }
 	void DrawModel(shared_ptr<Shader> shader) { DrawModelRecursive(RootNode, shader); }
 	//返回Mesh树的第一个Mesh
 	shared_ptr<Mesh>GetMesh();
+    glm::vec3 maxVertex;
+    glm::vec3 minVertex;
+    bool calcVertexRange = false;
 private:
     shared_ptr<MeshNode>RootNode;//使用同一个着色器的网格树
     string directory;//模型所在目录
