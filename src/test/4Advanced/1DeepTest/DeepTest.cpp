@@ -10,8 +10,8 @@
 #include "Camera.h"
 DeepTest::DeepTest()
 {
-	model = make_shared<Model>("res/model/nanosuit/nanosuit.obj");
-	shader = make_shared<Shader>("res/shader/4Advanced/1DeepTest/Default.shader");
+	model = make_shared<Model>(GetResDir() + "res/model/nanosuit/nanosuit.obj");
+	shader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/1DeepTest/Default.shader");
 
 	{//轴
 		float axisVectices[] = {
@@ -24,7 +24,7 @@ DeepTest::DeepTest()
 		};
 		objects.push_back(make_shared<Object>());
 
-		objects[0]->shader = make_shared<Shader>("res/shader/axis.shader");
+		objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/axis.shader");
 		objects[0]->shader->Bind();
 		objects[0]->shader->SetUniformMat4f("model", glm::mat4(1));//默认静止，所以模型矩阵直接写死，不在渲染循环更新
 		objects[0]->vao = make_shared<VertexArray>();

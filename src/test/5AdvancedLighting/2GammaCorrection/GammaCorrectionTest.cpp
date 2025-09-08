@@ -8,7 +8,7 @@
 #include "Camera.h"
 #include "imgui/imgui.h"
 #include "stb_image/stb_image.h"
-unsigned int loadTexture(char const* path, bool gammaCorrection);
+unsigned int loadTexture(string path, bool gammaCorrection);
 GammaCorrectionTest::GammaCorrectionTest()
 {
 	float planeVertices[] = {
@@ -23,7 +23,7 @@ GammaCorrectionTest::GammaCorrectionTest()
 	};
 	{//µÿ∞Â
 		objects.push_back(make_shared<Object>());
-		objects[0]->shader = make_shared<Shader>("res/shader/5AdvancedLighting/2GammaCorrection/Floor.shader");
+		objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/5AdvancedLighting/2GammaCorrection/Floor.shader");
 		objects[0]->vao = make_shared<VertexArray>();
 		objects[0]->vbo = make_shared<VertexBuffer>(planeVertices, sizeof(planeVertices));
 		objects[0]->layout = make_shared<VertexBufferLayout>();
@@ -31,8 +31,8 @@ GammaCorrectionTest::GammaCorrectionTest()
 		objects[0]->layout->Push<float>(3);
 		objects[0]->layout->Push<float>(2);
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-		FloorTexture = loadTexture("res/image/wood.png", false);
-		FloorTextureGamma = loadTexture("res/image/wood.png", true);
+		FloorTexture = loadTexture(GetResDir() + "res/image/wood.png", false);
+		FloorTextureGamma = loadTexture(GetResDir() + "res/image/wood.png", true);
 	}
 	GLfloat cubeVertices[] = {
 		// Positions       
@@ -80,7 +80,7 @@ GammaCorrectionTest::GammaCorrectionTest()
 	};
 	{//π‚‘¥
 		objects.push_back(make_shared<Object>());
-		objects[1]->shader = make_shared<Shader>("res/shader/light.shader");
+		objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/light.shader");
 		objects[1]->vao = make_shared<VertexArray>();
 		objects[1]->vbo = make_shared<VertexBuffer>(cubeVertices, sizeof(cubeVertices));
 		objects[1]->layout = make_shared<VertexBufferLayout>();
@@ -134,13 +134,13 @@ void GammaCorrectionTest::OnImGuiRender()
 	ImGui::SliderFloat3("LightPos", &objects[1]->pos.x, -10, 10);
 }
 
-unsigned int loadTexture(char const* path, bool gammaCorrection)
+unsigned int loadTexture(string path, bool gammaCorrection)
 {
 	unsigned int textureID;
 	glGenTextures(1, &textureID);
 
 	int width, height, nrComponents;
-	unsigned char* data = stbi_load(path, &width, &height, &nrComponents, 0);
+	unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrComponents, 0);
 	GLenum internalFormat;
 	GLenum dataFormat;
 	if (data)

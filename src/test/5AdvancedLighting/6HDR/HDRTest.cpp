@@ -71,7 +71,7 @@ HDRTest::HDRTest()
 		objects[0]->layout->Push<float>(3);
 		objects[0]->layout->Push<float>(2);
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/wood.png", true));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/wood.png", true));
 	}
 
 	float quadVertices[] = {
@@ -92,8 +92,8 @@ HDRTest::HDRTest()
 		objects[1]->vao->AddBuffer(*objects[1]->vbo, *objects[1]->layout);
 	}
 	{
-		Shaders["Scene"] = make_shared<Shader>("res/shader/5AdvancedLighting/6HDR/Scene.shader");
-		Shaders["Quad"] = make_shared<Shader>("res/shader/5AdvancedLighting/6HDR/Quad.shader");
+		Shaders["Scene"] = make_shared<Shader>(GetResDir() + "res/shader/5AdvancedLighting/6HDR/Scene.shader");
+		Shaders["Quad"] = make_shared<Shader>(GetResDir() + "res/shader/5AdvancedLighting/6HDR/Quad.shader");
 
 	}
 	GLCall(glGenTextures(1, &HDRTexture));

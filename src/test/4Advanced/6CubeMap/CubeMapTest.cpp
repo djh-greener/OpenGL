@@ -60,7 +60,7 @@ CubeMapTest::CubeMapTest()
 	};
 	{
 		objects.push_back(make_shared<Object>());
-		objects[0]->shader = make_shared<Shader>("res/shader/4Advanced/6CubeMap/SkyBox.shader");
+		objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/6CubeMap/SkyBox.shader");
 		objects[0]->vao = make_shared<VertexArray>();
 		objects[0]->vbo = make_shared<VertexBuffer>(skyboxVertices, sizeof(skyboxVertices));
 		objects[0]->layout = make_shared<VertexBufferLayout>();
@@ -113,7 +113,7 @@ CubeMapTest::CubeMapTest()
 	};
 	{
 		objects.push_back(make_shared<Object>());
-		objects[1]->shader = make_shared<Shader>("res/shader/4Advanced/6CubeMap/ReflectCube.shader");
+		objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/6CubeMap/ReflectCube.shader");
 		objects[1]->vao = make_shared<VertexArray>();
 		objects[1]->vbo = make_shared<VertexBuffer>(vertices, sizeof(vertices));
 		objects[1]->layout = make_shared<VertexBufferLayout>();
@@ -133,20 +133,20 @@ CubeMapTest::CubeMapTest()
 	};
 	{//四边形
 		objects.push_back(make_shared<Object>());
-		objects[2]->shader = make_shared<Shader>("res/shader/4Advanced/6CubeMap/Plane.shader");
+		objects[2]->shader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/6CubeMap/Plane.shader");
 		objects[2]->vao = make_shared<VertexArray>();
 		objects[2]->vbo = make_shared<VertexBuffer>(quadVertices, sizeof(quadVertices));
 		objects[2]->layout = make_shared<VertexBufferLayout>();
 		objects[2]->layout->Push<float>(2);
 		objects[2]->layout->Push<float>(2);
 		objects[2]->vao->AddBuffer(*objects[2]->vbo, *objects[2]->layout);
-		objects[2]->texs.push_back(make_shared<Texture>("res/image/metal.png"));
+		objects[2]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/metal.png"));
 	}
 
-	model = make_shared<Model>("res/model/nanosuit/nanosuit.obj");
-	ReflectShader = make_shared<Shader>("res/shader/4Advanced/6CubeMap/ReflectNanosuit.shader");
-	RefractShader = make_shared<Shader>("res/shader/4Advanced/6CubeMap/RefractNanosuit.shader");
-	DefaultShader = make_shared<Shader>("res/shader/4Advanced/6CubeMap/Nanosuit.shader");
+	model = make_shared<Model>(GetResDir() + "res/model/nanosuit/nanosuit.obj");
+	ReflectShader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/6CubeMap/ReflectNanosuit.shader");
+	RefractShader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/6CubeMap/RefractNanosuit.shader");
+	DefaultShader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/6CubeMap/Nanosuit.shader");
 	vector<std::string> faces
 	{
 		"right.jpg",
@@ -157,7 +157,7 @@ CubeMapTest::CubeMapTest()
 		"back.jpg"
 	};
 	for (auto &it : faces) 
-		it = "res/image/skybox/" + it;
+		it = GetResDir() + "res/image/skybox/" + it;
 	LoadCubemap(faces);//此纹理占用8号纹理槽
 }
 

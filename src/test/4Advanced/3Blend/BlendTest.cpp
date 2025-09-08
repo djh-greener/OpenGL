@@ -68,7 +68,7 @@ BlendTest::BlendTest()
 		};
 		objects.push_back(make_shared<Object>());
 
-		objects[0]->shader = make_shared<Shader>("res/shader/axis.shader");
+		objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/axis.shader");
 		objects[0]->shader->Bind();
 		objects[0]->shader->SetUniformMat4f("model", glm::mat4(1));//默认静止，所以模型矩阵直接写死，不在渲染循环更新
 		objects[0]->vao = make_shared<VertexArray>();
@@ -79,7 +79,7 @@ BlendTest::BlendTest()
 	}
 	{//地板和正方体
 		objects.push_back(make_shared<Object>());
-		objects[1]->shader = make_shared<Shader>("res/shader/4Advanced/3Blend/Cube.shader");
+		objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/3Blend/Cube.shader");
 		objects[1]->vao = make_shared<VertexArray>();
 		objects[1]->vbo = make_shared<VertexBuffer>(vertices, sizeof(vertices));
 		objects[1]->layout = make_shared<VertexBufferLayout>();
@@ -87,8 +87,8 @@ BlendTest::BlendTest()
 		objects[1]->layout->Push<float>(3);
 		objects[1]->layout->Push<float>(2);
 		objects[1]->vao->AddBuffer(*objects[1]->vbo, *objects[1]->layout);
-		objects[1]->texs.push_back(make_shared<Texture>("res/image/metal.png"));//地板的纹理
-		objects[1]->texs.push_back(make_shared<Texture>("res/image/marble.jpg"));//正方体的纹理
+		objects[1]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/metal.png"));//地板的纹理
+		objects[1]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/marble.jpg"));//正方体的纹理
 		
 	}
 	float transparentVertices[] = {
@@ -103,19 +103,19 @@ BlendTest::BlendTest()
 	};
 	{//半透明：草
 		objects.push_back(make_shared<Object>());
-		objects[2]->shader = make_shared<Shader>("res/shader/4Advanced/3Blend/Grass.shader");
+		objects[2]->shader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/3Blend/Grass.shader");
 		objects[2]->vao = make_shared<VertexArray>();
 		objects[2]->vbo = make_shared<VertexBuffer>(transparentVertices, sizeof(transparentVertices));
 		objects[2]->layout = make_shared<VertexBufferLayout>();
 		objects[2]->layout->Push<float>(3);
 		objects[2]->layout->Push<float>(2);
 		objects[2]->vao->AddBuffer(*objects[2]->vbo, *objects[2]->layout);
-		objects[2]->texs.push_back(make_shared<Texture>("res/image/grass.png"));
+		objects[2]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/grass.png"));
 	}
 	{//半透明：窗户
 		objects.push_back(make_shared<Object>());
-		objects[3]->shader = make_shared<Shader>("res/shader/4Advanced/3Blend/Window.shader");
-		objects[3]->texs.push_back(make_shared<Texture>("res/image/window.png"));
+		objects[3]->shader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/3Blend/Window.shader");
+		objects[3]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/window.png"));
 	}
 }
 

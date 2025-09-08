@@ -17,7 +17,7 @@ TriangleTest::TriangleTest()
          0.0f,  0.5f, 0.0f
             };
         objects.push_back(make_shared<Object>());
-        objects[0]->shader = make_shared<Shader>("res/shader/1GetStart/1Triangle/TriangleTest.shader");
+        objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/1GetStart/1Triangle/TriangleTest.shader");
         objects[0]->vao = make_shared< VertexArray>();
         objects[0]->vbo = make_shared< VertexBuffer>(vertices, sizeof(vertices));
         objects[0]->layout = make_shared< VertexBufferLayout>();
@@ -78,7 +78,7 @@ TriangleTest::TriangleTest()
         objects[4]->vao->AddBuffer(*objects[4]->vbo, *objects[0]->layout);
 
         objects.push_back(make_shared< Object>());
-        objects[5]->shader = make_shared< Shader>("res/shader/1GetStart/1Triangle/TriangleTest_yellow.shader");
+        objects[5]->shader = make_shared< Shader>(GetResDir() + "res/shader/1GetStart/1Triangle/TriangleTest_yellow.shader");
         objects[5]->vao = make_shared< VertexArray>();
         objects[5]->vbo = make_shared< VertexBuffer>(vertices2, sizeof(vertices2));
         objects[5]->vao->AddBuffer(*objects[5]->vbo, *objects[0]->layout);

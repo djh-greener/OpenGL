@@ -57,7 +57,7 @@ AntiAliasingTest::AntiAliasingTest()
 	};
 	{
 		objects.push_back(make_shared<Object>());
-		objects[0]->shader = make_shared<Shader>("res/shader/4Advanced/11AntiAliasing/Cube.shader");
+		objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/11AntiAliasing/Cube.shader");
 		objects[0]->vao = make_shared<VertexArray>();
 		objects[0]->vbo = make_shared<VertexBuffer>(cubeVertices,sizeof(cubeVertices));
 		objects[0]->layout = make_shared<VertexBufferLayout>();

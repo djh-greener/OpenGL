@@ -13,9 +13,9 @@
 
 LightCasterTest::LightCasterTest()
 {
-    ShaderCach[DirectionalLight] = make_shared<Shader>("res/shader/2Light/5LightCaster/DirectionalLight.shader");
-    ShaderCach[PointLight] = make_shared<Shader>("res/shader/2Light/5LightCaster/PointLight.shader");
-    ShaderCach[FlashLight] = make_shared<Shader>("res/shader/2Light/5LightCaster/FlashLight.shader");
+    ShaderCach[DirectionalLight] = make_shared<Shader>(GetResDir() + "res/shader/2Light/5LightCaster/DirectionalLight.shader");
+    ShaderCach[PointLight] = make_shared<Shader>(GetResDir() + "res/shader/2Light/5LightCaster/PointLight.shader");
+    ShaderCach[FlashLight] = make_shared<Shader>(GetResDir() + "res/shader/2Light/5LightCaster/FlashLight.shader");
 
 
     lightColor = glm::vec3(1);
@@ -74,15 +74,15 @@ LightCasterTest::LightCasterTest()
         objects[0]->layout->Push<float>(3);
         objects[0]->layout->Push<float>(2);
         objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-        objects[0]->texs.push_back(make_shared<Texture>("res/image/container2.png"));
-        objects[0]->texs.push_back(make_shared<Texture>("res/image/container2_specular.png"));
+        objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/container2.png"));
+        objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/container2_specular.png"));
 
         for (int i = 0; i < objects[0]->texs.size(); i++)
             objects[0]->texs[i]->Bind(i);
     } 
     {//光源
         objects.push_back(make_shared<Object>());
-        objects[1]->shader = make_shared<Shader>("res/shader/2Light/4LightingMap/light.shader");
+        objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/2Light/4LightingMap/light.shader");
         objects[1]->pos = { 1.2f, 1.0f, 2.0f };
         //用的是物体的顶点数据，不过没有用上纹理坐标
     }
@@ -97,7 +97,7 @@ LightCasterTest::LightCasterTest()
         };
         objects.push_back(make_shared<Object>());
 
-        objects[2]->shader = make_shared<Shader>("res/shader/axis.shader");
+        objects[2]->shader = make_shared<Shader>(GetResDir() + "res/shader/axis.shader");
         objects[2]->shader->Bind();
         objects[2]->shader->SetUniformMat4f("model", glm::mat4(1));//默认静止，所以模型矩阵直接写死，不在渲染循环更新
 

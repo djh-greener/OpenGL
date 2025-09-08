@@ -28,15 +28,15 @@ GeometryShaderTest::GeometryShaderTest()
 		objects[0]->layout->Push<float>(3);
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
 	}
-	model = make_shared<Model>("res/model/nanosuit/nanosuit.obj");
+	model = make_shared<Model>(GetResDir() + "res/model/nanosuit/nanosuit.obj");
 	{//生成一系列着色器
 		vector<string>shadernames = { "Point","Line","House", "Explode","DrawNormal"};
-		string directory = "res/shader/4Advanced/9GeometryShader/";
+		string directory = GetResDir() + "res/shader/4Advanced/9GeometryShader/";
 		for (auto name : shadernames) {
 			shaders[name] = make_shared<Shader>(directory + name + ".shader");
 		}
 		//辅助"DrawNormal"的，不可选
-		shaders["Nanosuit"] = make_shared<Shader>("res/shader/Nanosuit.shader");
+		shaders["Nanosuit"] = make_shared<Shader>(GetResDir() + "res/shader/Nanosuit.shader");
 	}
 }
 

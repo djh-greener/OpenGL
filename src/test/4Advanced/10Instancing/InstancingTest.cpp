@@ -109,10 +109,10 @@ InstancingTest::InstancingTest()
 		}
 		//小行星绘制对象准备
 		
-		planet = make_shared<Model>("res/model/planet/planet.obj");
-		rock = make_shared<Model>("res/model/rock/rock.obj");
-		sphere = make_shared<Model>("res/model/base/sphere.obj");
-		texHDR = LoadHDR("res/image/space2.hdr");
+		planet = make_shared<Model>(GetResDir() + "res/model/planet/planet.obj");
+		rock = make_shared<Model>(GetResDir() + "res/model/rock/rock.obj");
+		sphere = make_shared<Model>(GetResDir() + "res/model/base/sphere.obj");
+		texHDR = LoadHDR(GetResDir() + "res/image/space2.hdr");
 
 		shared_ptr<VertexBuffer>vbo = make_shared<VertexBuffer>(modelMatrices.data(), sizeof(glm::mat4) * modelMatrices.size());
 		
@@ -137,7 +137,7 @@ InstancingTest::InstancingTest()
 	}
 	{//生成一系列着色器
 		vector<string>shadernames = { "Instancing","InstancingArray","UnInstancedPlanet","Background","InstancedPlanet" };
-		string directory = "res/shader/4Advanced/10Instancing/";
+		string directory = GetResDir() + "res/shader/4Advanced/10Instancing/";
 		for (auto name : shadernames) {
 			shaders[name] = make_shared<Shader>(directory + name + ".shader");
 		}

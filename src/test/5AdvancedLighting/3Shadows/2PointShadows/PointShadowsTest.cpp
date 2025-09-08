@@ -84,7 +84,7 @@ PointShadowsTest::PointShadowsTest()
 		objects[0]->layout->Push<float>(3);
 		objects[0]->layout->Push<float>(2);
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/wood.png", true));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/wood.png", true));
 	}
 	float LightVertices[] = {
 		// Positions       
@@ -132,7 +132,7 @@ PointShadowsTest::PointShadowsTest()
 	};
 	{//光源
 		objects.push_back(make_shared<Object>());
-		objects[1]->shader = make_shared<Shader>("res/shader/light.shader");
+		objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/light.shader");
 		objects[1]->vao = make_shared<VertexArray>();
 		objects[1]->vbo = make_shared<VertexBuffer>(LightVertices, sizeof(LightVertices));
 		objects[1]->layout = make_shared<VertexBufferLayout>();
@@ -157,7 +157,7 @@ PointShadowsTest::PointShadowsTest()
 
 		objects.push_back(make_shared<Object>());
 
-		objects[3]->shader = make_shared<Shader>("res/shader/axis.shader");
+		objects[3]->shader = make_shared<Shader>(GetResDir() + "res/shader/axis.shader");
 		objects[3]->shader->Bind();
 		objects[3]->shader->SetUniformMat4f("model", glm::mat4(1));//默认静止，所以模型矩阵直接写死，不在渲染循环更新
 		objects[3]->vao = make_shared<VertexArray>();
@@ -167,7 +167,7 @@ PointShadowsTest::PointShadowsTest()
 		objects[3]->vao->AddBuffer(*objects[3]->vbo, *objects[3]->layout);
 	}
 	vector<string>shadernames = { "Scene","DepthBox","Depth"};//"Scene"
-	string directory = "res/shader/5AdvancedLighting/3Shadows/2PointShadows/";
+	string directory = GetResDir() + "res/shader/5AdvancedLighting/3Shadows/2PointShadows/";
 	for (auto name : shadernames) {
 		Shaders[name] = make_shared<Shader>(directory + name + ".shader");
 	}

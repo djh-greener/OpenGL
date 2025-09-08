@@ -98,7 +98,7 @@ SSAOTest::SSAOTest()
 		};
 		{//นโิด
 			objects.push_back(make_shared<Object>());
-			objects[2]->shader = make_shared<Shader>("res/shader/light.shader");
+			objects[2]->shader = make_shared<Shader>(GetResDir() + "res/shader/light.shader");
 			objects[2]->vao = make_shared<VertexArray>();
 			objects[2]->vbo = make_shared<VertexBuffer>(cubeVertices, sizeof(cubeVertices));
 			objects[2]->layout = make_shared<VertexBufferLayout>();
@@ -106,7 +106,7 @@ SSAOTest::SSAOTest()
 			objects[2]->vao->AddBuffer(*objects[2]->vbo, *objects[2]->layout);
 			objects[2]->pos = glm::vec3(0, 1, 0);
 		}
-		nanosuit = make_shared<Model>("res/model/nanosuit/nanosuit.obj");
+		nanosuit = make_shared<Model>(GetResDir() + "res/model/nanosuit/nanosuit.obj");
 
 	}
 
@@ -219,7 +219,7 @@ SSAOTest::SSAOTest()
 	{
 		vector<string>ShaderNames = { "Plane", "NanosuitTBN",  "SSAOQuad","Quad", };
 		for (int i = 0; i < ShaderNames.size(); i++) {
-			string path = "res/shader/5AdvancedLighting/9SSAO/" + ShaderNames[i] + ".shader";
+			string path = GetResDir() + "res/shader/5AdvancedLighting/9SSAO/" + ShaderNames[i] + ".shader";
 			Shaders[ShaderNames[i]] = make_shared<Shader>(path);
 		}
 

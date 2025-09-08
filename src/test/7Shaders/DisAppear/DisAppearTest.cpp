@@ -7,19 +7,16 @@
 #include "MyDebug.h"
 #include "Camera.h"
 #include "Model.h"
-struct Vertex {
-	glm::vec3 Pos;
-	glm::vec3 Normal;
-	glm::vec2 TexCoord;
-	glm::vec3 Tangent;
-	glm::vec3 BiTangent;
-};
+#include "ParticleSystem.h"
 
 DisAppearTest::DisAppearTest()
 {
-	model = make_shared<Model>("res/model/nanosuit/nanosuit.obj",true);
-	Shaders["Nanosuit"] = make_shared<Shader>("res/shader/7Shaders/DisAppear/Nanosuit.glsl");
-	Shaders["DrawNormal"] = make_shared<Shader>("res/shader/4Advanced/9GeometryShader/DrawNormal.shader");
+    glEnable(GL_PROGRAM_POINT_SIZE);
+	model = make_shared<Model>(GetResDir() + "res/model/nanosuit/nanosuit.obj",true);
+	Shaders["Nanosuit"] = make_shared<Shader>(GetResDir() + "res/shader/7Shaders/DisAppear/Nanosuit.glsl");
+    Shaders["Particle"] = make_shared<Shader>( GetResDir() + "res/shader/7Shaders/DisAppear/ParticleRender.glsl");
+    auto computeShader = make_shared<ComputeShader>(GetResDir() + "res/shader/7Shaders/DisAppear/ParticleCompute.glsl");
+    particleSystem = make_shared<ParticleSystem>(1000, Shaders["Particle"], computeShader);
 }
 
 void DisAppearTest::OnRender()
@@ -44,15 +41,15 @@ void DisAppearTest::OnRender()
 	Shaders["Nanosuit"]->SetUniform3f("maxVertex", modelMat * glm::vec4(model->maxVertex,1.f));
 	Shaders["Nanosuit"]->SetUniform1f("progress", time);
 	model->DrawModel(Shaders["Nanosuit"]);
-	//����Debug
-	//Shaders["DrawNormal"]->Bind();
-	//Shaders["DrawNormal"]->SetUniformMat4f("model", modelMat);
-	//Shaders["DrawNormal"]->SetUniformMat4f("view", m_View);
-	//Shaders["DrawNormal"]->SetUniformMat4f("projection", m_Proj);
-	//model->DrawModel(Shaders["DrawNormal"]);
+
+    particleSystem->Render(m_View, m_Proj, false);
 
 }
 
 void DisAppearTest::OnImGuiRender()
 {
+}
+
+void DisAppearTest::OnUpdate(float deltaTime) {
+    particleSystem->Update(deltaTime, static_cast<float>(glfwGetTime()));
 }

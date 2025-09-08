@@ -18,7 +18,7 @@ IBLTest::IBLTest()
 	
 	//加载着色器
 	{
-		fs::path directory = "res/shader/6PBR/2IBL/";
+		fs::path directory = GetResDir() + "res/shader/6PBR/2IBL/";
 		for (const auto& entry : fs::directory_iterator(directory)) {
 			if (fs::is_regular_file(entry)) { // 检查是否是文件
 				string filename = entry.path().filename().string();
@@ -53,7 +53,7 @@ IBLTest::IBLTest()
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
 
 		//加载所有pbr材质贴图
-		fs::path directory = "res/image/pbr/";
+		fs::path directory = GetResDir() + "res/image/pbr/";
 		for (const auto& entry : fs::directory_iterator(directory)) {
 			if (fs::is_directory(entry)) { // 检查是否是文件
 				string MaterialName = entry.path().filename().string();
@@ -126,15 +126,15 @@ IBLTest::IBLTest()
 
 
 		HDRTextures.push_back(0);
-		LoadHDR("res/image/hdr/forest_grove_4k.hdr", HDRTextures.back());
+		LoadHDR(GetResDir() + "res/image/hdr/forest_grove_4k.hdr", HDRTextures.back());
 		HDRTextures.push_back(0);
-		LoadHDR("res/image/hdr/newport_loft.hdr", HDRTextures.back());
+		LoadHDR(GetResDir() + "res/image/hdr/newport_loft.hdr", HDRTextures.back());
 		HDRTextures.push_back(0);
-		LoadHDR("res/image/hdr/quarry_cloudy_4k.hdr", HDRTextures.back());
+		LoadHDR(GetResDir() + "res/image/hdr/quarry_cloudy_4k.hdr", HDRTextures.back());
 		HDRTextures.push_back(0);
-		LoadHDR("res/image/hdr/qwantani_patio_4k.hdr", HDRTextures.back());
+		LoadHDR(GetResDir() + "res/image/hdr/qwantani_patio_4k.hdr", HDRTextures.back());
 		HDRTextures.push_back(0);
-		LoadHDR("res/image/hdr/rogland_clear_night_4k.hdr", HDRTextures.back());
+		LoadHDR(GetResDir() + "res/image/hdr/rogland_clear_night_4k.hdr", HDRTextures.back());
 		
 	}
 	//铺屏四边形 LUT

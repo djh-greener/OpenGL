@@ -26,13 +26,6 @@ add_custom_command(TARGET OpenGL POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
     "${PROJECT_SOURCE_DIR}/lib/assimp-vc142-mt.dll" $<TARGET_FILE_DIR:OpenGL>
 )
-# res拷贝到输出目录
-add_custom_command(
-    TARGET OpenGL POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    "${PROJECT_SOURCE_DIR}/res" $<TARGET_FILE_DIR:OpenGL>/res
-)
-
 
 # 包含目录
 target_include_directories(OpenGL PUBLIC 	

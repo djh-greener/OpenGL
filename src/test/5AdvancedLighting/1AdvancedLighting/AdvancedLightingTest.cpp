@@ -22,7 +22,7 @@ AdvancedLightingTest::AdvancedLightingTest()
 	};
 	{//µÿ∞Â
 		objects.push_back(make_shared<Object>());
-		objects[0]->shader = make_shared<Shader>("res/shader/5AdvancedLighting/1AdvancedLighting/Floor.shader");
+		objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/5AdvancedLighting/1AdvancedLighting/Floor.shader");
 		objects[0]->vao = make_shared<VertexArray>();
 		objects[0]->vbo = make_shared<VertexBuffer>(planeVertices, sizeof(planeVertices));
 		objects[0]->layout = make_shared<VertexBufferLayout>();
@@ -30,7 +30,7 @@ AdvancedLightingTest::AdvancedLightingTest()
 		objects[0]->layout->Push<float>(3);
 		objects[0]->layout->Push<float>(2);
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/wood.png"));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/wood.png"));
 	}
 	GLfloat cubeVertices[] = {
 		// Positions       
@@ -78,7 +78,7 @@ AdvancedLightingTest::AdvancedLightingTest()
 	};
 	{//π‚‘¥
 		objects.push_back(make_shared<Object>());
-		objects[1]->shader = make_shared<Shader>("res/shader/light.shader");
+		objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/light.shader");
 		objects[1]->vao = make_shared<VertexArray>();
 		objects[1]->vbo = make_shared<VertexBuffer>(cubeVertices, sizeof(cubeVertices));
 		objects[1]->layout = make_shared<VertexBufferLayout>();

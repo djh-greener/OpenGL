@@ -65,15 +65,15 @@ NormalMappingTest::NormalMappingTest()
 		objects[0]->layout->Push<float>(3);
 		objects[0]->layout->Push<float>(3);
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/brickwall.jpg", true));
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/brickwall_normal.jpg"));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/brickwall.jpg", true));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/brickwall_normal.jpg"));
 	}
-	model = make_shared<Model>("res/model/nanosuit/nanosuit.obj");
-	Shaders["Nanosuit"] = make_shared<Shader>("res/shader/5AdvancedLighting/4NormalMapping/Nanosuit.shader");
-	Shaders["NanosuitTBN"] = make_shared<Shader>("res/shader/5AdvancedLighting/4NormalMapping/NanosuitTBN.shader");
-	Shaders["Wall"] = make_shared<Shader>("res/shader/5AdvancedLighting/4NormalMapping/Wall.shader");
-	Shaders["WallTBN"] = make_shared<Shader>("res/shader/5AdvancedLighting/4NormalMapping/WallTBN.shader");
-	Shaders["DrawNormal"] = make_shared<Shader>("res/shader/4Advanced/9GeometryShader/DrawNormal.shader");
+	model = make_shared<Model>(GetResDir() + "res/model/nanosuit/nanosuit.obj");
+	Shaders["Nanosuit"] = make_shared<Shader>(GetResDir() + "res/shader/5AdvancedLighting/4NormalMapping/Nanosuit.shader");
+	Shaders["NanosuitTBN"] = make_shared<Shader>(GetResDir() + "res/shader/5AdvancedLighting/4NormalMapping/NanosuitTBN.shader");
+	Shaders["Wall"] = make_shared<Shader>(GetResDir() + "res/shader/5AdvancedLighting/4NormalMapping/Wall.shader");
+	Shaders["WallTBN"] = make_shared<Shader>(GetResDir() + "res/shader/5AdvancedLighting/4NormalMapping/WallTBN.shader");
+	Shaders["DrawNormal"] = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/9GeometryShader/DrawNormal.shader");
 }
 
 void NormalMappingTest::OnRender()

@@ -60,7 +60,7 @@ ColorTest::ColorTest()
     };
     {//Box
         objects.push_back(make_shared<Object>());
-        objects[0]->shader = make_shared<Shader>("res/shader/2Light/1Color/ColorTest.shader");
+        objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/2Light/1Color/ColorTest.shader");
         objects[0]->shader->Bind();
         objects[0]->shader->SetUniformMat4f("model", glm::mat4(1.f));
 
@@ -87,7 +87,7 @@ ColorTest::ColorTest()
         };
         objects.push_back(make_shared<Object>());
 
-        objects[2]->shader = make_shared<Shader>("res/shader/axis.shader");
+        objects[2]->shader = make_shared<Shader>(GetResDir() + "res/shader/axis.shader");
         objects[2]->shader->Bind();
         objects[2]->shader->SetUniformMat4f("model", glm::mat4(1));
 

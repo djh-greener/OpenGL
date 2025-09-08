@@ -30,7 +30,7 @@ ShadowMappingTest::ShadowMappingTest()
 	GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 
 	vector<string>shadernames = { "Depth" ,"Quad","Scene"};
-	string directory = "res/shader/5AdvancedLighting/3Shadows/1ShadowMapping/";
+	string directory = GetResDir() + "res/shader/5AdvancedLighting/3Shadows/1ShadowMapping/";
 	for (auto name : shadernames) {
 		Shaders[name] = make_shared<Shader>(directory + name + ".shader");
 	}
@@ -53,7 +53,7 @@ ShadowMappingTest::ShadowMappingTest()
 		objects[0]->layout->Push<float>(3);
 		objects[0]->layout->Push<float>(2);
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/wood.png", true));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/wood.png", true));
 	}
 	float CubeVertices[] = {
 		// positions          // normals           // texture coords
@@ -105,7 +105,7 @@ ShadowMappingTest::ShadowMappingTest()
 		objects[1]->vao = make_shared<VertexArray>();
 		objects[1]->vbo = make_shared<VertexBuffer>(CubeVertices, sizeof(CubeVertices));
 		objects[1]->vao->AddBuffer(*objects[1]->vbo, *objects[0]->layout);
-		objects[1]->texs.push_back(make_shared<Texture>("res/image/marble.jpg", true));
+		objects[1]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/marble.jpg", true));
 	}
 	float LightVertices[] = {
 		// Positions       
@@ -153,7 +153,7 @@ ShadowMappingTest::ShadowMappingTest()
 	};
 	{//光源
 		objects.push_back(make_shared<Object>());
-		objects[2]->shader = make_shared<Shader>("res/shader/light.shader");
+		objects[2]->shader = make_shared<Shader>(GetResDir() + "res/shader/light.shader");
 		objects[2]->vao = make_shared<VertexArray>();
 		objects[2]->vbo = make_shared<VertexBuffer>(LightVertices, sizeof(LightVertices));
 		objects[2]->layout = make_shared<VertexBufferLayout>();
@@ -172,7 +172,7 @@ ShadowMappingTest::ShadowMappingTest()
 	};
 	{//深度贴图
 		objects.push_back(make_shared<Object>());
-		objects[3]->shader = make_shared<Shader>("res/shader/5AdvancedLighting/3Shadows/1ShadowMapping/Quad.shader");
+		objects[3]->shader = make_shared<Shader>(GetResDir() + "res/shader/5AdvancedLighting/3Shadows/1ShadowMapping/Quad.shader");
 		objects[3]->vao = make_shared<VertexArray>();
 		objects[3]->vbo = make_shared<VertexBuffer>(quadVertices, sizeof(quadVertices));
 		objects[3]->layout = make_shared<VertexBufferLayout>();

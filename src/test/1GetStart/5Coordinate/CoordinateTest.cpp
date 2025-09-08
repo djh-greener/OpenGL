@@ -61,7 +61,7 @@ CoordinateTest::CoordinateTest()
     {//Default
         objects.push_back(make_shared<Object>());
 
-        objects[0]->shader = make_shared<Shader>("res/shader/1GetStart/5Coordinate/CoordinateTest.shader");
+        objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/1GetStart/5Coordinate/CoordinateTest.shader");
         objects[0]->shader->Bind();
         objects[0]->shader->SetUniform1i("Texture0", 0);//设置着色器里的采样器对应的纹理单元
         objects[0]->shader->SetUniform1i("Texture1", 1);
@@ -74,8 +74,8 @@ CoordinateTest::CoordinateTest()
         objects[0]->layout->Push<float>(3);//位置
         objects[0]->layout->Push<float>(2);//纹理坐标
         objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-        objects[0]->texs.push_back(make_shared<Texture>("res/image/container.jpg"));
-        objects[0]->texs.push_back(make_shared<Texture>("res/image/awesomeface.png"));
+        objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/container.jpg"));
+        objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/awesomeface.png"));
         //将纹理对象绑定到对应纹理单元
         for (int i = 0; i < objects[0]->texs.size(); i++)
             objects[0]->texs[i]->Bind(i);
@@ -91,7 +91,7 @@ CoordinateTest::CoordinateTest()
         };
         objects.push_back(make_shared<Object>());
 
-        objects[1]->shader = make_shared<Shader>("res/shader/axis.shader");
+        objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/axis.shader");
         objects[1]->shader->Bind();
         objects[1]->pos = { 0,0,0 };
         glm::mat4 model = glm::translate(glm::mat4(1), objects[0]->pos);

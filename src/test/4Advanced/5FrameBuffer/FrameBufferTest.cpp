@@ -67,14 +67,14 @@ FrameBufferTest::FrameBufferTest()
 	fbo->AddAttachment(AttachmentType::Default);
 	{//正方体
 		objects.push_back(make_shared<Object>());
-		objects[0]->shader = make_shared<Shader>("res/shader/4Advanced/5FrameBuffer/Cube.shader");
+		objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/5FrameBuffer/Cube.shader");
 		objects[0]->vao = make_shared<VertexArray>();
 		objects[0]->vbo = make_shared<VertexBuffer>(cubeVertices, sizeof(cubeVertices));
 		objects[0]->layout = make_shared<VertexBufferLayout>();
 		objects[0]->layout->Push<float>(3);
 		objects[0]->layout->Push<float>(2);
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/container.jpg"));//正方体的纹理
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/container.jpg"));//正方体的纹理
 	}
 	{//四边形
 		objects.push_back(make_shared<Object>());
@@ -85,12 +85,12 @@ FrameBufferTest::FrameBufferTest()
 		objects[1]->layout->Push<float>(2);
 		objects[1]->vao->AddBuffer(*objects[1]->vbo, *objects[1]->layout);
 	}
-	shaders["Quad"] = make_shared<Shader>("res/shader/4Advanced/5FrameBuffer/Quad.shader");
-	shaders["Reverse"] = make_shared<Shader>("res/shader/4Advanced/5FrameBuffer/Reverse.shader");
-	shaders["GrayScale"] = make_shared<Shader>("res/shader/4Advanced/5FrameBuffer/GrayScale.shader"); 
-	shaders["SharpenKernel"] = make_shared<Shader>("res/shader/4Advanced/5FrameBuffer/SharpenKernel.shader");
-	shaders["BlurKernel"] = make_shared<Shader>("res/shader/4Advanced/5FrameBuffer/BlurKernel.shader"); 
-	shaders["EdgeDetectionKernel"] = make_shared<Shader>("res/shader/4Advanced/5FrameBuffer/EdgeDetectionKernel.shader");
+	shaders["Quad"] = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/5FrameBuffer/Quad.shader");
+	shaders["Reverse"] = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/5FrameBuffer/Reverse.shader");
+	shaders["GrayScale"] = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/5FrameBuffer/GrayScale.shader");
+	shaders["SharpenKernel"] = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/5FrameBuffer/SharpenKernel.shader");
+	shaders["BlurKernel"] = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/5FrameBuffer/BlurKernel.shader");
+	shaders["EdgeDetectionKernel"] = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/5FrameBuffer/EdgeDetectionKernel.shader");
 }
 
 void FrameBufferTest::OnRender()

@@ -65,12 +65,12 @@ ParallaxMappingTest::ParallaxMappingTest()
 		objects[0]->layout->Push<float>(3);
 		objects[0]->layout->Push<float>(3);
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/bricks2.jpg",true));
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/bricks2_normal.jpg"));
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/bricks2_disp.jpg"));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/bricks2.jpg",true));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/bricks2_normal.jpg"));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/bricks2_disp.jpg"));
 	}
 	
-	Shaders["Wall"] = make_shared<Shader>("res/shader/5AdvancedLighting/5ParallaxMapping/Wall.shader");
+	Shaders["Wall"] = make_shared<Shader>(GetResDir() + "res/shader/5AdvancedLighting/5ParallaxMapping/Wall.shader");
 
 }
 

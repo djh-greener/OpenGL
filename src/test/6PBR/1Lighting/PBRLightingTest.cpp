@@ -17,8 +17,8 @@ PBRLightingTest::PBRLightingTest()
 		vector<float> data;
 		renderSphere(data, indices,64,64);
 		objects.push_back(make_shared<Object>());
-		Shaders["Sphere"] = make_shared<Shader>("res/shader/6PBR/1Lighting/Sphere.shader");
-		Shaders["SphereTexture"] = make_shared<Shader>("res/shader/6PBR/1Lighting/SphereTexture.shader");
+		Shaders["Sphere"] = make_shared<Shader>(GetResDir() + "res/shader/6PBR/1Lighting/Sphere.shader");
+		Shaders["SphereTexture"] = make_shared<Shader>(GetResDir() + "res/shader/6PBR/1Lighting/SphereTexture.shader");
 		objects[0]->vao = make_shared<VertexArray>();
 		objects[0]->vbo = make_shared<VertexBuffer>(data.data(), sizeof(float)*data.size());
 
@@ -31,11 +31,11 @@ PBRLightingTest::PBRLightingTest()
 		ebo->Bind();
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
 
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/rusted_iron/albedo.png",true));
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/rusted_iron/ao.png"));
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/rusted_iron/metallic.png"));
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/rusted_iron/normal.png"));
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/rusted_iron/roughness.png"));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/rusted_iron/albedo.png",true));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/rusted_iron/ao.png"));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/rusted_iron/metallic.png"));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/rusted_iron/normal.png"));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/rusted_iron/roughness.png"));
 		for (size_t i = 0; i < objects[0]->texs.size(); i++)
 			objects[0]->texs[i]->Bind(i);
 		

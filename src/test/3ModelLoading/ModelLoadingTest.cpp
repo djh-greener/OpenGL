@@ -11,8 +11,8 @@
 #include "imgui/imgui.h"
 ModelLoadingTest::ModelLoadingTest()
 {
-	model = make_shared<Model>("res/model/nanosuit/nanosuit.obj");
-	shader = make_shared<Shader>("res/shader/3ModelLoading/Default.shader");
+	model = make_shared<Model>(GetResDir() + "res/model/nanosuit/nanosuit.obj");
+	shader = make_shared<Shader>(GetResDir() + "res/shader/3ModelLoading/Default.shader");
 
 	{//轴
 		float axisVectices[] = {
@@ -25,7 +25,7 @@ ModelLoadingTest::ModelLoadingTest()
 		};
 		objects.push_back(make_shared<Object>());
 
-		objects[0]->shader = make_shared<Shader>("res/shader/axis.shader");
+		objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/axis.shader");
 		objects[0]->shader->Bind();
 		objects[0]->shader->SetUniformMat4f("model", glm::mat4(1));//默认静止，所以模型矩阵直接写死，不在渲染循环更新
 		objects[0]->vao = make_shared<VertexArray>();
@@ -81,7 +81,7 @@ ModelLoadingTest::ModelLoadingTest()
 		};
 		objects.push_back(make_shared<Object>());
 
-		objects[1]->shader = make_shared<Shader>("res/shader/light.shader");
+		objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/light.shader");
 		objects[1]->shader->Bind();
 		
 		objects[1]->vao = make_shared<VertexArray>();

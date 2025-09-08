@@ -64,11 +64,11 @@ Test* currentTest = nullptr;
 int main() {
 	//初始化glfw，创建窗口,加入主线程
 	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_SAMPLES, 4);
-	
+
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
 	if (window == NULL) {
 		cout << "Failed to Creat Window\n";

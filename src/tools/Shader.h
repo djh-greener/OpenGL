@@ -11,7 +11,6 @@ struct ShaderProgramSource
 	const string VertexShader;
 	const string FragmentShader;
 	const string GeometryShader;
-
 };
 
 class Shader
@@ -37,8 +36,9 @@ public:
 	void SetUniformMat3f(const std::string& name, const glm::mat3& matrix);
 private:
 	int GetUniformLocation(const std::string& name)const;
-	ShaderProgramSource ParseShader(const string FilePath);//从文件读Shader源码
+	ShaderProgramSource ParseShader(const string FilePath);
 	unsigned int CompileShader(unsigned int  type, const string ShaderSource);
-	unsigned int CreateShaderProgram(const string VertexShaderSource, const string FragmentShaderSource, const string GeometryShaderSource);
+	unsigned int CreateShaderProgram(const string VertexShaderSource, const string FragmentShaderSource,
+                                     const string GeometryShaderSource);
 };
 

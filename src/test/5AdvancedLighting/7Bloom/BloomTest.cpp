@@ -72,8 +72,8 @@ BloomTest::BloomTest()
 		objects[0]->layout->Push<float>(3);
 		objects[0]->layout->Push<float>(2);
 		objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/container2.png", true));
-		objects[0]->texs.push_back(make_shared<Texture>("res/image/wood.png", true));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/container2.png", true));
+		objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/wood.png", true));
 	}
 	float QuadVertices[] = {
 	-1.0f,  1.0f,  0.0f, 1.0f,
@@ -96,7 +96,7 @@ BloomTest::BloomTest()
 	//-------------Shaders Loading&Setting-----------------//
 	vector<string>ShaderNames = { "Cube","Light","Quad","Blur","Blend"};
 	for (int i = 0; i < ShaderNames.size(); i++) {
-		string path = "res/shader/5AdvancedLighting/7Bloom/" + ShaderNames[i] + ".shader";
+		string path = GetResDir() + "res/shader/5AdvancedLighting/7Bloom/" + ShaderNames[i] + ".shader";
 		Shaders[ShaderNames[i]] = make_shared<Shader>(path);
 	}
 	{

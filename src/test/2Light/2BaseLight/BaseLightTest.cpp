@@ -60,9 +60,9 @@ BaseLightTest::BaseLightTest()
     };
     {//Box
         objects.push_back(make_shared<Object>());
-        ShaderCach[Default] = make_shared<Shader>("res/shader/2Light/2BaseLight/Default.shader");
-        ShaderCach[Third] = make_shared<Shader>("res/shader/2Light/2BaseLight/Third.shader");
-        ShaderCach[Fourth] = make_shared<Shader>("res/shader/2Light/2BaseLight/Fourth.shader");
+        ShaderCach[Default] = make_shared<Shader>(GetResDir() + "res/shader/2Light/2BaseLight/Default.shader");
+        ShaderCach[Third] = make_shared<Shader>(GetResDir() + "res/shader/2Light/2BaseLight/Third.shader");
+        ShaderCach[Fourth] = make_shared<Shader>(GetResDir() + "res/shader/2Light/2BaseLight/Fourth.shader");
 
         objects[0]->shader = ShaderCach[Default];
         objects[0]->shader->Bind();
@@ -75,7 +75,7 @@ BaseLightTest::BaseLightTest()
     }
     {//Light
         objects.push_back(make_shared<Object>());
-        objects[1]->shader = make_shared<Shader>("res/shader/2Light/2BaseLight/light.shader");
+        objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/2Light/2BaseLight/light.shader");
         objects[1]->shader->Bind();
         objects[1]->pos = {1.2f, 1.0f, 2.0f};
     }
@@ -90,7 +90,7 @@ BaseLightTest::BaseLightTest()
         };
         objects.push_back(make_shared<Object>());
 
-        objects[2]->shader = make_shared<Shader>("res/shader/axis.shader");
+        objects[2]->shader = make_shared<Shader>(GetResDir() + "res/shader/axis.shader");
         objects[2]->shader->Bind();
         objects[2]->shader->SetUniformMat4f("model", glm::mat4(1));//默认静止，所以模型矩阵直接写死，不在渲染循环更新
 

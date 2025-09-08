@@ -75,7 +75,7 @@ ShaderProgramSource Shader::ParseShader(const string FilePath)
 {
     enum ShaderType
     {
-        None=-1, Vertex=0, Fragment=1, Geometry =2
+        None=-1, Vertex=0, Fragment=1, Geometry=2
     };
     fstream fstream(FilePath);
     string line;
@@ -95,7 +95,7 @@ ShaderProgramSource Shader::ParseShader(const string FilePath)
         else
             ss[int(type)] << line << "\n";
     }
-    return { ss[0].str(), ss[1].str() ,ss[2].str() };
+    return { ss[0].str(), ss[1].str(), ss[2].str() };
 }
 
 unsigned int Shader::CompileShader(unsigned int type, const string ShaderSource)
@@ -118,7 +118,8 @@ unsigned int Shader::CompileShader(unsigned int type, const string ShaderSource)
     return ShaderID;
 }
 
-unsigned int Shader::CreateShaderProgram(const string VertexShaderSource, const string FragmentShaderSource, const string GeometryShaderSource)
+unsigned int Shader::CreateShaderProgram(const string VertexShaderSource, const string FragmentShaderSource,
+                                         const string GeometryShaderSource)
 {
     unsigned int VertexShader = CompileShader(GL_VERTEX_SHADER, VertexShaderSource);
     unsigned int FragmentShader = CompileShader(GL_FRAGMENT_SHADER, FragmentShaderSource);

@@ -82,7 +82,7 @@ DeferredShadingTest::DeferredShadingTest()
 		objects[1]->layout->Push<float>(3);
 		objects[1]->vao->AddBuffer(*objects[1]->vbo, *objects[1]->layout);
 	}
-	nanosuit = make_shared<Model>("res/model/nanosuit/nanosuit.obj");
+	nanosuit = make_shared<Model>(GetResDir() + "res/model/nanosuit/nanosuit.obj");
 
 	int length = 6, nums = 3;//3m x3m, 3 x 3¸ö
 	int offset = length / (nums - 1);
@@ -109,7 +109,7 @@ DeferredShadingTest::DeferredShadingTest()
 
 	vector<string>ShaderNames = { "Nanosuit","NanosuitTBN", "Quad","Light"};
 	for (int i = 0; i < ShaderNames.size(); i++) {
-		string path = "res/shader/5AdvancedLighting/8DeferredShading/" + ShaderNames[i] + ".shader";
+		string path = GetResDir() + "res/shader/5AdvancedLighting/8DeferredShading/" + ShaderNames[i] + ".shader";
 		Shaders[ShaderNames[i]] = make_shared<Shader>(path);
 	}
 	Shaders["Quad"]->Bind();

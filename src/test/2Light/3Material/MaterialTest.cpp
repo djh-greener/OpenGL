@@ -69,7 +69,7 @@ MaterialTest::MaterialTest()
     };
 	{//物体
         objects.push_back(make_shared<Object>());
-        objects[0]->shader = make_shared<Shader>("res/shader/2Light/3Material/Default.shader");
+        objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/2Light/3Material/Default.shader");
         objects[0]->vao = make_shared<VertexArray>();
         objects[0]->vbo = make_shared<VertexBuffer>(vertices,sizeof(vertices));
         objects[0]->layout = make_shared<VertexBufferLayout>();
@@ -79,7 +79,7 @@ MaterialTest::MaterialTest()
 	}
     {//光源
         objects.push_back(make_shared<Object>());
-        objects[1]->shader = make_shared<Shader>("res/shader/2Light/3Material/light.shader");
+        objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/2Light/3Material/light.shader");
         objects[1]->pos = { 1.2f, 1.0f, 2.0f };
     }
     {//轴
@@ -93,7 +93,7 @@ MaterialTest::MaterialTest()
 		};
         objects.push_back(make_shared<Object>());
 
-        objects[2]->shader = make_shared<Shader>("res/shader/axis.shader");
+        objects[2]->shader = make_shared<Shader>(GetResDir() + "res/shader/axis.shader");
         objects[2]->shader->Bind();
         objects[2]->shader->SetUniformMat4f("model", glm::mat4(1));//默认静止，所以模型矩阵直接写死，不在渲染循环更新
 

@@ -20,7 +20,7 @@ TextureTest::TextureTest()
     };
     {//Default
         objects.push_back(make_shared<Object>());
-        objects[0]->shader = make_shared<Shader>("res/shader/1GetStart/3Texture/TextureTest.shader");
+        objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/1GetStart/3Texture/TextureTest.shader");
         objects[0]->shader->Bind();
         objects[0]->shader->SetUniform1i("Texture0", 0);//设置着色器里的采样器对应的纹理单元
         objects[0]->shader->SetUniform1i("Texture1", 1);
@@ -31,15 +31,15 @@ TextureTest::TextureTest()
         objects[0]->layout->Push<float>(3);//颜色
         objects[0]->layout->Push<float>(2);//纹理坐标
         objects[0]->vao->AddBuffer(*objects[0]->vbo, *objects[0]->layout);
-        objects[0]->texs.push_back(make_shared<Texture>("res/image/container.jpg"));
-        objects[0]->texs.push_back(make_shared<Texture>("res/image/awesomeface.png"));
+        objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/container.jpg"));
+        objects[0]->texs.push_back(make_shared<Texture>(GetResDir() + "res/image/awesomeface.png"));
         //将纹理对象绑定到对应纹理单元
         for (int i = 0; i < objects[0]->texs.size(); i++)
             objects[0]->texs[i]->Bind(i);
     }
     {//First:修改片段着色器，仅让笑脸图案朝另一个方向看
         objects.push_back(make_shared<Object>());
-        objects[1]->shader = make_shared<Shader>("res/shader/1GetStart/3Texture/TextureFirstTest.shader");
+        objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/1GetStart/3Texture/TextureFirstTest.shader");
         objects[1]->shader->Bind();
         objects[1]->shader->SetUniform1i("Texture0", 0);//设置着色器里的采样器对应的纹理单元
         objects[1]->shader->SetUniform1i("Texture1", 1);
@@ -78,7 +78,7 @@ TextureTest::TextureTest()
     }
     {//Fourth:使用一个uniform变量作为mix函数的第三个参数来改变两个纹理可见度，使用上和下键来改变箱子或笑脸的可见度
         objects.push_back(make_shared<Object>());
-        objects[4]->shader = make_shared<Shader>("res/shader/1GetStart/3Texture/TextureFourthTest.shader");
+        objects[4]->shader = make_shared<Shader>(GetResDir() + "res/shader/1GetStart/3Texture/TextureFourthTest.shader");
         objects[4]->shader->Bind();
         objects[4]->shader->SetUniform1i("Texture0", 0);//设置着色器里的采样器对应的纹理单元
         objects[4]->shader->SetUniform1i("Texture1", 1);

@@ -17,7 +17,7 @@ ShaderTest::ShaderTest()
 			 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // 顶部
 		};
 		objects.push_back(make_shared<Object>());
-		objects[0]->shader = make_shared<Shader>("res/shader/1GetStart/2Shader/ShaderTest.shader");
+		objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/1GetStart/2Shader/ShaderTest.shader");
 		objects[0]->vao = make_shared<VertexArray>();
 		objects[0]->vbo = make_shared<VertexBuffer>(vertices, sizeof(vertices));
 		objects[0]->layout = make_shared<VertexBufferLayout>();
@@ -27,16 +27,16 @@ ShaderTest::ShaderTest()
 	}
 	{//First:修改顶点着色器让三角形上下颠倒
 		objects.push_back(make_shared<Object>());
-		objects[1]->shader = make_shared<Shader>("res/shader/1GetStart/2Shader/ShaderTest_UpSideDown.shader");
+		objects[1]->shader = make_shared<Shader>(GetResDir() + "res/shader/1GetStart/2Shader/ShaderTest_UpSideDown.shader");
 	}
 	{//Second:使用uniform定义一个水平偏移量，在顶点着色器中使用这个偏移量把三角形移动到屏幕右侧
 		objects.push_back(make_shared<Object>());
-		objects[2]->shader = make_shared<Shader>("res/shader/1GetStart/2Shader/ShaderTest_MoveRight.shader");
+		objects[2]->shader = make_shared<Shader>(GetResDir() + "res/shader/1GetStart/2Shader/ShaderTest_MoveRight.shader");
 	}
 	{//Third:使用out关键字把顶点位置输出到片段着色器，并将片段的颜色设置为与顶点位置相等（来看看连顶点位置值都在三角形中被插值的结果）。
 		//做完这些后，尝试回答下面的问题：为什么在三角形的左下角是黑的?
 		objects.push_back(make_shared<Object>());
-		objects[3]->shader = make_shared<Shader>("res/shader/1GetStart/2Shader/ShaderTest_PosByColor.shader");
+		objects[3]->shader = make_shared<Shader>(GetResDir() + "res/shader/1GetStart/2Shader/ShaderTest_PosByColor.shader");
 
 	}
 	{//MyTry:彩色六芒星
@@ -51,7 +51,7 @@ ShaderTest::ShaderTest()
 		};
 
 		objects.push_back(make_shared< Object>());
-		objects[4]->shader = make_shared< Shader>("res/shader/1GetStart/2Shader/ShaderTest_MyTry.shader");
+		objects[4]->shader = make_shared< Shader>(GetResDir() + "res/shader/1GetStart/2Shader/ShaderTest_MyTry.shader");
 		objects[4]->vao = make_shared< VertexArray>();
 		objects[4]->vbo = make_shared< VertexBuffer>(vertices, sizeof(vertices));
 		objects[4]->vao->AddBuffer(*objects[4]->vbo, *objects[0]->layout);
