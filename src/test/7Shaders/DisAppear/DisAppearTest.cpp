@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Model.h"
 #include "ParticleSystem.h"
+#include "ComputeShader.h"
 
 DisAppearTest::DisAppearTest()
 {

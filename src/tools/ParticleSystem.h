@@ -3,19 +3,24 @@
 #include "glad/glad.h"
 #include "glm/glm.hpp"
 #include <vector>
-#include <string>
-#include "Shader.h"
-#include "ComputeShader.h"
+#include <memory>
+using namespace std;
+
 class VertexArray;
-class VertexBuffer;
+class StorageBuffer;
+class Shader;
+class ComputeShader;
 class ParticleSystem {
 public:
     //std140
     struct alignas(16) Particle {
         glm::vec3 position = {0,0,0};
-        float _padding1; // Ìî³ä vec3 µ½ 16 ×Ö½Ú
+        float _padding1;
         glm::vec4 color = {0,0,0,0};
-        float size = 0;
+        float size = 0.0f;
+        float lifetime = 0.0f;
+        float birthtime = 0.0f;
+        float age = 0.0f;
     };
 
     ParticleSystem(unsigned int maxParticles, const shared_ptr<Shader>& shader,
@@ -32,8 +37,11 @@ private:
     std::vector<Particle> m_particles;
     unsigned int groupSize = 64;
 
-    GLuint m_ssbo;
-    GLuint m_vao;
+//    GLuint m_ssbo;
+//    GLuint m_vbo;
+//    GLuint m_vao;
+    shared_ptr<VertexArray> m_vaoPtr;
+    shared_ptr<StorageBuffer> m_ssboPtr;
 
     shared_ptr<Shader> m_shader;
     shared_ptr<ComputeShader> m_computeShader;

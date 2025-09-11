@@ -7,6 +7,7 @@ struct VertexBufferElement {
 	unsigned int type;
 	unsigned int count;
 	bool normalized;
+    bool isPadding = false;
 	//.h里的函数定义必须是静态的，否则多个文件包含的时候重定义错误
 	static unsigned int getElementTypeSize(unsigned int type) {
 		switch (type)
@@ -46,6 +47,30 @@ public:
 		m_Elements.push_back(VertexBufferElement({ GL_UNSIGNED_BYTE, count, false }));
 		m_Stride += count * VertexBufferElement::getElementTypeSize(GL_UNSIGNED_BYTE);
 	}
+
+
+    template<typename T>
+    void PushPadding(unsigned int count) {
+        static_assert(false);
+    }
+
+    template<>
+    void PushPadding<float>(unsigned int count) {
+        m_Elements.push_back(VertexBufferElement({ GL_FLOAT, count, false, true}));
+        m_Stride += count * VertexBufferElement::getElementTypeSize(GL_FLOAT);
+    }
+
+    template<>
+    void PushPadding<unsigned int>(unsigned int count) {
+        m_Elements.push_back(VertexBufferElement({ GL_UNSIGNED_INT, count, false, true}));
+        m_Stride += count * VertexBufferElement::getElementTypeSize(GL_UNSIGNED_INT);
+    }
+
+    template<>
+    void PushPadding<unsigned char>(unsigned int count) {
+        m_Elements.push_back(VertexBufferElement({ GL_UNSIGNED_BYTE, count, false, true}));
+        m_Stride += count * VertexBufferElement::getElementTypeSize(GL_UNSIGNED_BYTE);
+    }
 
 	vector<VertexBufferElement> GetElements()const { return m_Elements; };
 	unsigned int GetStride() const{ return m_Stride; };

@@ -4,6 +4,9 @@ struct Particle {
     vec3 position;
     vec4 color;
     float size;
+    float lifetime;
+    float birthtime;
+    float age;
 };
 
 layout(std140, binding = 0) buffer ParticleBuffer {
@@ -23,13 +26,21 @@ void main() {
     // 使用全局索引和时间作为随机种子
     uint seed = idx + uint(time * 1000.0);
 
-    // 生成[-2, 2]范围内的随机位置
-    particles[idx].position = vec3(
-    mix(-2.0, 2.0, rand(seed)),
-    mix(-2.0, 2.0, rand(seed + 1u)),
-    mix(-2.0, 2.0, rand(seed + 2u))
-    );
+    // 如果粒子年龄超过生命周期，重新生成粒子
+    if (particles[idx].age >= particles[idx].lifetime || particles[idx].birthtime == 0.0) {
+        // 生成[-2, 2]范围内的随机位置
+        particles[idx].position = vec3(
+        mix(-2.0, 2.0, rand(seed)),
+        mix(-2.0, 2.0, rand(seed + 1u)),
+        mix(-2.0, 2.0, rand(seed + 2u))
+        );
 
-    particles[idx].color = vec4(1.0, 1.0, 0.0, 1.0);
-    particles[idx].size = 5.0;
+        particles[idx].color = vec4(1.0, 1.0, 0.0, 1.0);
+        particles[idx].size = 10.0;
+        particles[idx].lifetime = 1.0f;
+        particles[idx].birthtime = time;
+        particles[idx].age = 0.0f;
+    } else {
+        particles[idx].age = time -  particles[idx].birthtime;
+    }
 }
