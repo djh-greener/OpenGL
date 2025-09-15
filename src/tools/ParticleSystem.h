@@ -10,6 +10,7 @@ class VertexArray;
 class StorageBuffer;
 class Shader;
 class ComputeShader;
+class Texture;
 class ParticleSystem {
 public:
     //std140
@@ -37,12 +38,10 @@ private:
     std::vector<Particle> m_particles;
     unsigned int groupSize = 64;
 
-//    GLuint m_ssbo;
-//    GLuint m_vbo;
-//    GLuint m_vao;
-    shared_ptr<VertexArray> m_vaoPtr;
-    shared_ptr<StorageBuffer> m_ssboPtr;
+    shared_ptr<VertexArray> m_vao;
+    shared_ptr<StorageBuffer> m_ssbo;
 
+    shared_ptr<Texture> m_texture;
     shared_ptr<Shader> m_shader;
     shared_ptr<ComputeShader> m_computeShader;
 };

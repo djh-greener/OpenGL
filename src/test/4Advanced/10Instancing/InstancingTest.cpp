@@ -151,7 +151,7 @@ void InstancingTest::OnRender()
 	GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 	GLCall(glEnable(GL_DEPTH_TEST));
 	GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-	//GLCall(glDepthFunc(GL_LEQUAL));//渲染背景时需要
+	GLCall(glDepthFunc(GL_LEQUAL));//渲染背景时需要
 	
 	if(CurrentShader=="Instancing")
 	{
@@ -205,7 +205,7 @@ void InstancingTest::OnRender()
 		shaders["Background"]->Bind();
 		shaders["Background"]->SetUniformMat4f("view", glm::mat4(glm::mat3(m_View)));
 		shaders["Background"]->SetUniformMat4f("projection", m_Proj);
-		glBindTexture(GL_TEXTURE_2D, texHDR);
+		glBindTextureUnit(0, texHDR);
 		shaders["Background"]->SetUniform1i("screenTexture", 0);
 		sphere->DrawModel(shaders["Background"]);
 		glDepthMask(GL_TRUE);

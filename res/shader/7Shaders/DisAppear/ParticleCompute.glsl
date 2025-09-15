@@ -36,7 +36,7 @@ void main() {
         );
 
         particles[idx].color = vec4(1.0, 1.0, 0.0, 1.0);
-        particles[idx].size = 10.0;
+        particles[idx].size = 0.1;
         particles[idx].lifetime = 1.0f;
         particles[idx].birthtime = time;
         particles[idx].age = 0.0f;

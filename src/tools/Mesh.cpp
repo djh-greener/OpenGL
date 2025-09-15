@@ -52,8 +52,6 @@ void Mesh::DrawMesh(shared_ptr<Shader> shader)
         shader->SetUniform1i(varName, i);
     }
     vao->Bind();
-	//GLCall(glDrawArrays(GL_TRIANGLES, 0 , vertices.size()));
-
 	ebo->Bind();
     GLCall(glDrawElements(GL_TRIANGLES, ebo->GetCount(), GL_UNSIGNED_INT, 0));
     vao->UnBind();
