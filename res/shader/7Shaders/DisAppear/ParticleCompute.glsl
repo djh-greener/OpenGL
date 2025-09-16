@@ -2,7 +2,7 @@
 layout(local_size_x = 64, local_size_y = 1, local_size_z = 1) in;
 struct Particle {
     vec3 position;
-    vec4 color;
+    float padding;
     float size;
     float lifetime;
     float birthtime;
@@ -35,7 +35,6 @@ void main() {
         mix(-2.0, 2.0, rand(seed + 2u))
         );
 
-        particles[idx].color = vec4(1.0, 1.0, 0.0, 1.0);
         particles[idx].size = 0.1;
         particles[idx].lifetime = 1.0f;
         particles[idx].birthtime = time;

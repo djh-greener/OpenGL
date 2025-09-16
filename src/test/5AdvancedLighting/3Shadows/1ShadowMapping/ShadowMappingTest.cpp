@@ -6,7 +6,6 @@
 #include "Texture.h"
 #include "MyDebug.h"
 #include "Camera.h"
-#include"FrameBuffer.h"
 #include "imgui/imgui.h"
 extern unsigned int SCR_WIDTH ;
 extern unsigned int SCR_HEIGHT;

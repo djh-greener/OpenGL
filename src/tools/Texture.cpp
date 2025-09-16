@@ -90,3 +90,8 @@ void Texture::SetFilter(unsigned int mode)
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mode));
 	GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, mode));
 }
+
+void Texture::Bind(unsigned int slot, unsigned int id) {
+    GLCall(glActiveTexture(GL_TEXTURE0 + slot));
+    GLCall(glBindTexture(GL_TEXTURE_2D, id));
+}

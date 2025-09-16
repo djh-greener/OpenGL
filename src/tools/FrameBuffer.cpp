@@ -3,71 +3,146 @@
 #include"Texture.h"
 
 #include"MyDebug.h"
-extern unsigned int SCR_WIDTH;
-extern unsigned int SCR_HEIGHT;
 
-FrameBuffer::FrameBuffer()
+static GLenum AttachmentTypeToGL(AttachmentType& format)
 {
-	GLCall(glGenFramebuffers(1, &RenderID));
+    switch (format)
+    {
+        case AttachmentType::RGBA8:							return GL_RGBA8;
+        case AttachmentType::RGBA16F:						return GL_RGBA16F;
+        case AttachmentType::RED_INTEGER:					return GL_RED_INTEGER;
+        case AttachmentType::RED_FLOAT16:                   return GL_R16F;
+        case AttachmentType::DEPTH24STENCIL8:				return GL_DEPTH24_STENCIL8;
+    }
+
+    return 0;
 }
 
-void FrameBuffer::AddAttachment(AttachmentType type)
+static void AttachColorTexture(uint32_t id, FramebufferSpecification& spec, GLenum internalFormat, GLenum format, int index)
 {
-	Bind();
-	switch (type)
-	{
-	case Default://默认颜色缓冲添加到纹理，深度和模板添加到渲染缓冲对象
-		AddColorAttachmentTexture();
-		AddDepthStencilAttachmentRender();
-		break;
-	case Color:
-		AddColorAttachmentTexture();
-		break;
-	case Depth_Stencil:
-		AddDepthStencilAttachmentRender();
-		break;
-	default:
-		break;
-	}
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, spec.Width, spec.Height, 0, format, GL_UNSIGNED_BYTE,nullptr);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, GL_TEXTURE_2D, id, 0);
 }
 
-void FrameBuffer::Bind()
+static void AttachDepthTexture(uint32_t id, FramebufferSpecification& spec, GLenum format, GLenum attachmentType)
 {
-	GLCall(glBindFramebuffer(GL_FRAMEBUFFER, RenderID));
+    glTexStorage2D(GL_TEXTURE_2D, 1, format, spec.Width, spec.Height);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, GL_TEXTURE_2D, id, 0);
 }
 
-void FrameBuffer::UnBind()
+static bool IsDepthFormat(AttachmentType& format)
 {
-	GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+    switch (format)
+    {
+        case AttachmentType::DEPTH24STENCIL8:	return true;
+    }
+    return false;
 }
 
-bool FrameBuffer::CompleteCheck() const
+FrameBuffer::FrameBuffer(const FramebufferSpecification& spec):m_Specification(spec)
 {
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-		Log::GetInstance() << Log::Level::Warning << "FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
-		return false;
-	}
-		
-	return true;
+    for (auto spec : m_Specification.Attachments.Attachments)
+    {
+        if (!IsDepthFormat(spec))
+            m_ColorAttachmentSpecifications.emplace_back(spec);
+        else
+            m_DepthAttachmentSpecification = spec;
+    }
+    Invalidate();
 }
 
 FrameBuffer::~FrameBuffer()
 {
-	GLCall(glDeleteFramebuffers(1, &RenderID));
+
+    glDeleteFramebuffers(1, &m_RendererID);
+    glDeleteTextures((int)m_ColorAttachments.size(), m_ColorAttachments.data());
+    glDeleteTextures(1, &m_DepthAttachment);
+
 }
 
-void FrameBuffer::AddColorAttachmentTexture()
-{
-	ColorBuffer = make_shared<Texture>("");
-	GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ColorBuffer->m_RenderID, 0));
+void FrameBuffer::Invalidate() {
+    if (m_RendererID)
+    {
+        glDeleteFramebuffers(1, &m_RendererID);
+        glDeleteTextures((int)m_ColorAttachments.size(), m_ColorAttachments.data());
+        glDeleteTextures(1, &m_DepthAttachment);
+        m_ColorAttachments.clear();
+        m_DepthAttachment = 0;
+    }
+    glCreateFramebuffers(1, &m_RendererID);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
+    //Add Color
+    if (!m_ColorAttachmentSpecifications.empty())
+    {
+        m_ColorAttachments.resize(m_ColorAttachmentSpecifications.size());
+        glCreateTextures(GL_TEXTURE_2D, (int)m_ColorAttachments.size(), m_ColorAttachments.data());
+        for (int i = 0; i < m_ColorAttachments.size(); ++i)
+        {
+            AttachmentType TextureFormat = m_ColorAttachmentSpecifications[i];
+            glBindTexture(GL_TEXTURE_2D, m_ColorAttachments[i]);
+
+            switch (TextureFormat)
+            {
+                case AttachmentType::RGBA8:
+                    AttachColorTexture(m_ColorAttachments[i], m_Specification, GL_RGBA8,GL_RGBA, i);
+                    break;
+                case AttachmentType::RGBA16F:
+                    AttachColorTexture(m_ColorAttachments[i], m_Specification, GL_RGBA16F, GL_RGBA, i);
+                    break;
+                case AttachmentType::RED_INTEGER:
+                    AttachColorTexture(m_ColorAttachments[i], m_Specification, GL_R32I, GL_RED_INTEGER, i);
+                    break;
+            }
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+    }
+    //Add Depth
+    if (m_DepthAttachmentSpecification!=AttachmentType::None)
+    {
+        glCreateTextures(GL_TEXTURE_2D, 1, &m_DepthAttachment);
+        glBindTexture(GL_TEXTURE_2D, m_DepthAttachment);
+        switch (m_DepthAttachmentSpecification)
+        {
+            case AttachmentType::DEPTH24STENCIL8:
+                AttachDepthTexture(m_DepthAttachment, m_Specification, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT);
+                break;
+        }
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+    if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE){
+        cout<<"Framebuffer is incomplete!"<<endl;
+    }
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void FrameBuffer::AddDepthStencilAttachmentRender()
-{
-	unsigned int rbo;
-	GLCall(glGenRenderbuffers(1, &rbo));
-	GLCall(glBindRenderbuffer(GL_RENDERBUFFER, rbo));
-	GLCall(glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_WIDTH));
-	GLCall(glBindRenderbuffer(GL_RENDERBUFFER, 0));
-	GLCall(glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo));
+void FrameBuffer::Bind() const{
+    glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
+    glViewport(0, 0, (uint32_t)m_Specification.Width, (uint32_t)m_Specification.Height);
 }
+
+void FrameBuffer::UnBind() const{
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void FrameBuffer::ClearAttachment(uint32_t attachmentIndex, int value)
+{
+    if(attachmentIndex >= m_ColorAttachments.size())
+        return;
+
+    auto& spec = m_ColorAttachmentSpecifications[attachmentIndex];
+    glClearTexImage(m_ColorAttachments[attachmentIndex], 0, AttachmentTypeToGL(spec), GL_INT, &value);
+}
+

@@ -14,10 +14,9 @@ class Texture;
 class ParticleSystem {
 public:
     //std140
-    struct alignas(16) Particle {
+    struct Particle {
         glm::vec3 position = {0,0,0};
         float _padding1;
-        glm::vec4 color = {0,0,0,0};
         float size = 0.0f;
         float lifetime = 0.0f;
         float birthtime = 0.0f;
@@ -34,7 +33,7 @@ public:
 private:
     void InitBuffers();
 
-    unsigned int m_maxParticles = 10000;
+    unsigned int m_maxParticles = 1000;
     std::vector<Particle> m_particles;
     unsigned int groupSize = 64;
 

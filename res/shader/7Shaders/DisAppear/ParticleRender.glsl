@@ -1,17 +1,14 @@
 #shader vertex
 #version 460 core
 layout(location = 0) in vec3 inPosition;
-layout(location = 1) in vec4 inColor;
-layout(location = 2) in float inSize;
+layout(location = 1) in float inSize;
 
 out VS_OUT {
-    vec3 Color;
     float Size;
 } vs_out;
 
 void main() {
     gl_Position = vec4(inPosition, 1.0);
-    vs_out.Color = inColor.rgb;
     vs_out.Size = inSize;
 }
 
@@ -21,12 +18,10 @@ layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
 
 in VS_OUT {
-    vec3 Color;
     float Size;
 } gs_in[];
 
 out GS_OUT {
-    vec3 Color;
     vec2 TexCoord;
     vec3 Normal;
 } gs_out;
@@ -60,7 +55,6 @@ void main() {
 
     // Emit vertices with texture coordinates and normals
     gs_out.Normal = cameraForward;
-    gs_out.Color = gs_in[0].Color;
     // Triangle 1
     gs_out.TexCoord = vec2(0.0, 1.0);
     gl_Position = v1;
@@ -84,7 +78,6 @@ void main() {
 #shader fragment
 #version 460 core
 in GS_OUT {
-    vec3 Color;
     vec2 TexCoord;
     vec3 Normal;
 } fs_in;
@@ -93,7 +86,13 @@ uniform sampler2D tex;
 out vec4 FragColor;
 
 void main() {
-    FragColor =  vec4(fs_in.Color, texture(tex, fs_in.TexCoord).x);//);
+    vec3 color = texture(tex, fs_in.TexCoord).rgb;
+    float alpha = texture(tex, fs_in.TexCoord).x;
+    if (alpha < 0.001) {
+        discard;
+    }
+    float weight = alpha * max(1e-1, 1e1 * pow(1.0 - gl_FragCoord.z, 0.5)); // 减小深度衰减强度
 
-    //FragColor = vec4(1,1,0, 1.0);
+    FragColor = vec4(vec3(1,1,0) * alpha, alpha) * weight;
+
 }

@@ -63,8 +63,11 @@ FrameBufferTest::FrameBufferTest()
 	 1.0f, -1.0f,  1.0f, 0.0f,
 	 1.0f,  1.0f,  1.0f, 1.0f
 	};
-	fbo = make_shared<FrameBuffer>();
-	fbo->AddAttachment(AttachmentType::Default);
+    FramebufferSpecification spec;
+    spec.Attachments = { AttachmentType::RGBA8, AttachmentType::Depth };
+    spec.Width = SCR_WIDTH;
+    spec.Height = SCR_HEIGHT;
+	fbo = make_shared<FrameBuffer>(spec);
 	{//正方体
 		objects.push_back(make_shared<Object>());
 		objects[0]->shader = make_shared<Shader>(GetResDir() + "res/shader/4Advanced/5FrameBuffer/Cube.shader");
@@ -111,14 +114,15 @@ void FrameBufferTest::OnRender()
 	GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 	objects[0]->shader->SetUniformMat4f("model", glm::translate(glm::mat4(1), glm::vec3(-1, 0.5 + 0.06, -1)));
 	GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
-	fbo->CompleteCheck();
 
 	// pass2 显示纹理
 	fbo->UnBind();
 	GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 	GLCall(glClear(GL_COLOR_BUFFER_BIT));
 	glDisable(GL_DEPTH_TEST);
-	fbo->ColorBuffer->Bind(1);//
+    auto tex1 = fbo->GetColorAttachmentRendererID(0);
+    GLCall(glActiveTexture(GL_TEXTURE0 + 1));
+    GLCall(glBindTexture(GL_TEXTURE_2D, tex1));
 	shaders[CurrentShader]->Bind();
 	objects[1]->vao->Bind();
 	shaders[CurrentShader]->SetUniform1i("screenTexture", 1);

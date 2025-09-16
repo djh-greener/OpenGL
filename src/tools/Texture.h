@@ -13,7 +13,9 @@ public:
 	Texture(std::string const ImgPath,bool gamma=false);
 	~Texture();
 	void Bind(unsigned int slot);
-	void UnBind();
+    static void UnBind();
+    static void Bind(unsigned int slot, unsigned int id);
+    static void UnBind( unsigned int id);
 
 	static void SetRound(unsigned int mode);
 	static void SetFilter(unsigned int mode);
